@@ -1,0 +1,38 @@
+name: Validate plugin
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the manifest
+        run: python tools/build.py
+      - name: Checkout PBS-SDK validator
+        uses: actions/checkout@v4
+        with:
+          repository: seregonwar/PBS-SDK
+          path: .pbs-sdk
+      - name: Install validator dependency
+        run: python -m pip install jsonschema
+      - name: Validate against the published v5 schema
+        run: python .pbs-sdk/scripts/validate.py dist/plugin.json
+      - name: Refuse redistributed NVIDIA binaries
+        run: |
+          if git ls-files | grep -Ei '\.(dll|so|dylib|exe)$'; then
+            echo "Native binaries must not be committed" >&2
+            exit 1
+          fi

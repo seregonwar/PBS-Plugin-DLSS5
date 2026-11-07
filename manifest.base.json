@@ -1,0 +1,16 @@
+{
+  "schema": 5,
+  "api_version": 2,
+  "id": "com.seregonwar.dlss5",
+  "name": "DLSS 5 runtime companion",
+  "version": "0.1.0",
+  "description": "Verifies the NVIDIA DLSS 5 Neural Rendering runtime package (nvngx_dlssnr.dll) and remembers your upscaling preferences.",
+  "author": "SeregonWar",
+  "permissions": [
+    "runtime.script",
+    "api.host",
+    "api.store",
+    "api.ui",
+    "api.file"
+  ]
+}

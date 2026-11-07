@@ -1,0 +1,10 @@
+# NVIDIA runtime binaries are never redistributed by this repository.
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Local caches
+__pycache__/
+*.pyc
+.venv/
